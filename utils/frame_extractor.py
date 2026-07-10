@@ -8,7 +8,7 @@ import cv2
 def extract_frames(
     video_path: Path,
     output_dir: Path,
-    every_n: int = 10,
+    every_n: int = 10,#Save one frame after every 10 frames while reading the video.(Fixed Interval sampling)
     max_frames: int | None = None,
 ) -> int:
     if every_n <= 0:
@@ -16,12 +16,12 @@ def extract_frames(
 
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    capture = cv2.VideoCapture(str(video_path))
+    capture = cv2.VideoCapture(str(video_path))#means open the video file located at video_path for reading frames
     if not capture.isOpened():
         raise FileNotFoundError(f"Unable to open video: {video_path}")
 
-    saved_count = 0
-    frame_index = 0
+    saved_count = 0 #How many images were saved
+    frame_index = 0 #means the index of the current frame being processed in the video
 
     while True:
         success, frame = capture.read()
